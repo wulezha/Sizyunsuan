@@ -1,0 +1,288 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.Random;
+
+import javax.swing.JFrame;
+
+public class ChartPrint extends JFrame{
+
+	//绘制柱形统计图
+	private Random ran;
+	public ChartPrint(){
+		super();
+		ran = new Random();
+		setTitle("绘制得分柱形图");
+		setBounds(100, 100, 400, 271);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	@Override
+	public void paint(Graphics g){
+		int Width = getWidth();
+		int Height = getHeight();
+		int leftMargin = 20;//柱形图左边界
+		int topMargin = 50;//柱形图上边界
+		Graphics2D g2 = (Graphics2D) g;
+		int ruler = Height-topMargin-5;
+		int rulerStep = ruler/10;//将当前的高度评分为10个单位
+		g2.setColor(Color.WHITE);//绘制白色背景
+		g2.fillRect(0, 0, Width, Height);//绘制矩形图
+		g2.setColor(Color.LIGHT_GRAY);
+		for(int i=0;i<=10;i++){//绘制灰色横线和百分比
+			g2.drawString((100-10*i)+"%", 5, topMargin+rulerStep*i);//写下百分比
+			g2.drawLine(5, topMargin+rulerStep*i, Width, topMargin+rulerStep*i);//绘制灰色横线
+		}
+		g2.setColor(Color.cyan);
+		for(int i=0;i<4;i++){//绘制柱形图
+			int value = ran.nextInt(Height-topMargin-10)+10;//随机产生柱形的百分比
+			int step = (i+1)*40;//设置每隔柱形图的水平间隔为40
+			//绘制矩形
+//			g2.drawRoundRect(leftMargin+step*2, Height-value, 40, value, 40, 10);
+			g2.fillRoundRect(leftMargin+step*2, Height-value, 40, value, 40, 10);
+			//列出产品的编号
+			g2.drawString("练习次数"+(i+1), leftMargin+step*2, Height-value-5);
+		}
+	}
+	public static void main(String[] args) {
+		ChartPrint demo = new ChartPrint();
+		demo.setVisible(true);
+	}
+}
+
+柱形图
+
+
+
+
+
+
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+public class Login {    
+    private JFrame frame = new JFrame("四则运算");    
+    private Container c = frame.getContentPane();    
+    private JTextField username = new JTextField();    
+    private JPasswordField password = new JPasswordField();    
+    private JButton ok = new JButton("确定");
+    private JButton cancel = new JButton("取消");    
+    public Login(){       
+    	frame.setSize(300,200);        
+        c.setLayout(new BorderLayout());    
+        initFrame();    
+        frame.setVisible(true);
+        }    
+    private void initFrame() 
+    {                //顶部
+        ok.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0) {
+                new chuti();
+                }
+        });
+        JPanel titlePanel = new JPanel();    
+        titlePanel.setLayout(new FlowLayout());    
+        titlePanel.add(new JLabel("学生登录"));    
+        c.add(titlePanel,"North");            
+        //中部表单        
+        JPanel fieldPanel = new JPanel();        
+        fieldPanel.setLayout(null);        
+        JLabel l1 = new JLabel("学   号:");        
+        l1.setBounds(50, 20, 50, 20);    
+        JLabel l2 = new JLabel("密    码:");        
+        l2.setBounds(50, 60, 50, 20);    
+        fieldPanel.add(l1);        
+        fieldPanel.add(l2);        
+        username.setBounds(110,20,120,20);    
+        password.setBounds(110,60,120,20);    
+        fieldPanel.add(username);    
+        fieldPanel.add(password);    
+        c.add(fieldPanel,"Center");                //底部按钮        
+        JPanel buttonPanel = new JPanel();    
+        buttonPanel.setLayout(new FlowLayout());    
+        buttonPanel.add(ok);    
+        buttonPanel.add(cancel);        
+        c.add(buttonPanel,"South");
+        }    
+    public static void main(String[] args){       
+    	new Login(); 
+    	}    
+    }
+
+
+
+登录界面
+
+
+
+
+
+
+
+
+
+import java.util.Random;
+
+
+public class chuti {
+    int a,b,c,d;
+    int an[]=new int [5];
+    String bn[]=new String [5];
+    Random cn =new Random();
+    chuti(){
+        int i=0;
+        do{    
+        a=cn.nextInt(100);
+        b=cn.nextInt(100);
+        d=cn.nextInt(100)%4+1;
+        switch(d){
+            case 1:
+                an[i]=a+b;
+                bn[i]=String.valueOf(a)+"+"+String.valueOf(b)+"=";
+                i++;
+                break;
+            case 2: 
+                an[i]=a-b;
+                bn[i]=String.valueOf(a)+"-"+String.valueOf(b)+"=";
+                i++;break;
+            case 3:an[i]=a*b;
+            bn[i]=String.valueOf(a)+"*"+String.valueOf(b)+"=";
+            i++;
+                break;
+            case 4:an[i]=a/b;
+            bn[i]=String.valueOf(a)+"/"+String.valueOf(b)+"=";
+            i++;break;
+        }
+        }while(i<5);
+        for(int j=0;j<bn.length;j++)
+            {System.out.println(bn[j]);System.out.println(an[j]);
+            }
+        new yunsuan(an,bn);
+    }
+    
+}
+
+出题
+
+
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+
+public class yunsuan extends JFrame{
+    JLabel l1 = new JLabel("答对题数:");
+
+    private JFrame frame = new JFrame("四则运算");    
+    private Container c = frame.getContentPane();    
+    private JButton KO = new JButton("确定");
+    private JTextField A = new JTextField(6);
+    private JTextField AA = new JTextField(4);
+    private JTextField AAA = new JTextField(4);
+    private JTextField B = new JTextField(6);
+    private JTextField BB = new JTextField(4);
+    private JTextField BBB = new JTextField(4);
+    private JTextField C = new JTextField(6);
+    private JTextField CC = new JTextField(4);
+    private JTextField CCC = new JTextField(4);
+    private JTextField D = new JTextField(6);
+    private JTextField DD = new JTextField(4);
+    private JTextField DDD = new JTextField(4);
+    private JTextField E = new JTextField(6);
+    private JTextField EE = new JTextField(4);
+    private JTextField EEE = new JTextField(4);
+    
+    private JPasswordField password = new JPasswordField();    
+    private JButton ok = new JButton("确定");
+    private JTextField QQ = new JTextField(6);
+    
+    
+int num=0;
+    int an[]=new int [5];
+    String bn[]=new String [5];
+    String cn[]=new String [5];
+     yunsuan(int a[],String b[]) 
+    {    
+         an=a;
+         bn=b;
+     
+        JPanel fieldPanel = new JPanel();
+    
+        fieldPanel.add(A);A.setBounds(30, 10, 100, 20);
+        A.setVisible(true);
+        fieldPanel.add(AA);AA.setBounds(40, 10, 100, 20);
+        fieldPanel.add(AAA);AAA.setBounds(50, 10, 100, 20);
+        fieldPanel.add(B);B.setBounds(30, 15, 50, 20);
+        fieldPanel.add(BB);BB.setBounds(40, 15, 100, 20);
+        fieldPanel.add(BBB);BBB.setBounds(50, 10, 100, 20);
+        fieldPanel.add(C);C.setBounds(30, 20, 50, 20);
+        fieldPanel.add(CC);CC.setBounds(40, 20, 100, 20);
+        fieldPanel.add(CCC);CCC.setBounds(50, 10, 100, 20);
+        fieldPanel.add(D);D.setBounds(30, 25, 50, 20);
+        fieldPanel.add(DD);DD.setBounds(40, 25, 100, 20);
+        fieldPanel.add(DDD);DDD.setBounds(50, 10, 100, 20);
+        fieldPanel.add(E);E.setBounds(30, 30, 50, 20);
+        fieldPanel.add(EE);EE.setBounds(40, 30, 100, 20);
+        fieldPanel.add(EEE);EEE.setBounds(50, 10, 100, 20);
+        fieldPanel.add(KO);KO.setBounds(30, 50, 20, 20);
+        fieldPanel.add(l1);l1.setBounds(20, 60, 100, 20);
+        fieldPanel.add(QQ);QQ.setBounds(40, 70, 100, 20);
+    
+        KO.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0) {
+                cn[0]=AA.getText();
+                cn[1]=BB.getText();
+                cn[2]=CC.getText();
+                cn[3]=DD.getText();
+                cn[4]=EE.getText();
+                AAA.setText(String.valueOf(an[0]));
+            BBB.setText(String.valueOf(an[1]));        
+            CCC.setText(String.valueOf(an[2]));                
+            DDD.setText(String.valueOf(an[3]));
+            EEE.setText(String.valueOf(an[4]));
+                for(int i=0;i<an.length;i++)
+                if(String.valueOf(an[i]).equals(cn[i]))num++;
+                QQ.setText(String.valueOf(num));
+                }
+        });
+        fieldPanel.setVerifyInputWhenFocusTarget(true);
+        
+        
+        A.setText(bn[0]);
+        B.setText(bn[1]);
+        C.setText(bn[2]);
+        D.setText(bn[3]);
+        E.setText(bn[4]);
+        
+this.add(fieldPanel);
+this.setBounds(400, 400, 250, 270);
+this.setVisible(true);
+
+    }
+     }
+
+
+
+
+文本框
+
+
